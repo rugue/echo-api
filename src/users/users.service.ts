@@ -24,8 +24,8 @@ export class UsersService {
       .exec();
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll(): Promise<User[]> {
+    return this.userModel.find().exec();
   }
 
   findOne(id: number) {
