@@ -13,6 +13,10 @@ export class UsersService {
     return this.userModel.findOne({ email }).exec();
   }
 
+  async findById(id: string): Promise<User> {
+    return this.userModel.findById(id).exec();
+  }
+
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     const user = new this.userModel(createUserDto);
     return user.save();
