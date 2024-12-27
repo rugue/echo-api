@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   HttpException,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,6 +20,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @UsePipes(new ValidationPipe())
   async createUser(@Body() createUserDto: CreateUserDto) {
     return this.usersService.createUser(createUserDto);
   }
@@ -42,8 +45,14 @@ export class UsersController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(id, updateUserDto);
+  @UsePipes(new ValidationPipe())
+  async updateUser(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    const isValid = mongoose.Types.ObjectId.isValid(id);
+    if (!isValid) throw new HttpException('Invalid ID', 400);
+    return this.usersService.updateUser(id, updateUserDto);
   }
 
   @Delete(':id')

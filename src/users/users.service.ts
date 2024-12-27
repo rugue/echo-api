@@ -22,7 +22,10 @@ export class UsersService {
     return user.save();
   }
 
-  async update(userId: string, updateUserDto: UpdateUserDto): Promise<User> {
+  async updateUser(
+    userId: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<User> {
     return this.userModel
       .findByIdAndUpdate(userId, updateUserDto, { new: true })
       .exec();
