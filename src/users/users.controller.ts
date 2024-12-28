@@ -52,11 +52,17 @@ export class UsersController {
   ) {
     const isValid = mongoose.Types.ObjectId.isValid(id);
     if (!isValid) throw new HttpException('Invalid ID', 400);
-    return this.usersService.updateUser(id, updateUserDto);
+    const updatedUser = await this.usersService.updateUser(id, updateUserDto);
+    if (!updatedUser) throw new HttpException('User not found', 404);
+    return updatedUser;
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+    const isValid = mongoose.Types.ObjectId.isValid(id);
+    if (!isValid) throw new HttpException('Invalid ID', 400);
+    const deletedUser = await this.usersService.remove(id);
+    if (!deletedUser) throw new HttpException('User not found', 404);
+    return; //this.usersService.remove(+id);
   }
 }
