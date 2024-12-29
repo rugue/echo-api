@@ -1,4 +1,11 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { CreateUserSettingsDto } from 'src/settings/dto/create-user-settings.dto';
 
 export class CreateUserDto {
   @IsEmail()
@@ -16,4 +23,8 @@ export class CreateUserDto {
   @IsOptional()
   @IsString()
   name?: string;
+
+  @IsOptional()
+  @ValidateNested()
+  settings?: CreateUserSettingsDto;
 }
