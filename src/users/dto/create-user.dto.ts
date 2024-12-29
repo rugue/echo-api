@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
@@ -26,5 +27,6 @@ export class CreateUserDto {
 
   @IsOptional()
   @ValidateNested()
+  @Type(() => CreateUserSettingsDto)
   settings?: CreateUserSettingsDto;
 }

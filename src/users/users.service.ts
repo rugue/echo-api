@@ -4,10 +4,15 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/user.entity';
 import { Model } from 'mongoose';
+import { UserSettings } from 'src/settings/schemas/UserSettings.schema';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(UserSettings.name)
+    private userSettingsModel: Model<UserSettings>,
+  ) {}
 
   async findByEmail(email: string): Promise<User> {
     return this.userModel.findOne({ email }).exec();
@@ -17,9 +22,22 @@ export class UsersService {
     return this.userModel.findById(id).exec();
   }
 
-  async createUser(createUserDto: CreateUserDto): Promise<User> {
-    const user = new this.userModel(createUserDto);
-    return user.save();
+  async createUser({
+    settings,
+    ...createUserDto
+  }: CreateUserDto): Promise<User> {
+    if (settings) {
+      const newSettings = new this.userSettingsModel(settings);
+      const savedNewSettings = await newSettings.save();
+      // createUserDto.settings = newSettings;
+      const newUser = new this.userModel({
+        ...createUserDto,
+        settings: savedNewSettings._id,
+      });
+      return newUser.save();
+    }
+    const newUser = new this.userModel(createUserDto);
+    return newUser.save();
   }
 
   async updateUser(
