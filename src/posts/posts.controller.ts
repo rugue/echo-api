@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -16,8 +18,9 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  create(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.create(createPostDto);
+  @UsePipes(new ValidationPipe())
+  createPost(@Body() createPostDto: CreatePostDto) {
+    return this.postsService.createPost(createPostDto);
   }
 
   @Get()
@@ -26,8 +29,8 @@ export class PostsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.postsService.findOne(+id);
+  findPostById(@Param('id') id: string) {
+    return this.postsService.findPostById(+id);
   }
 
   @Patch(':id')

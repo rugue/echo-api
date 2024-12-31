@@ -1,28 +1,42 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Post } from './schema/post.schema';
+import { User } from 'src/users/schemas/user.entity';
 
 @Injectable()
 export class PostsService {
-  constructor(@InjectModel(Post.name) private postModel: Model<Post>) {}
+  constructor(
+    @InjectModel(Post.name) private postModel: Model<Post>,
+    @InjectModel(User.name) private userModel: Model<User>,
+  ) {}
 
-  create(createPostDto: CreatePostDto) {
-    return 'This action adds a new post';
+  async createPost({ userId, ...CreatePostDto }: CreatePostDto) {
+    const findUser = await this.userModel.findById(userId);
+    if (!findUser) throw new HttpException('User not found', 404);
+
+    const newPost = new this.postModel(CreatePostDto);
+    const savedPost = await newPost.save();
+    await findUser.updateOne({
+      $push: {
+        posts: savedPost._id,
+      },
+    });
+    return savedPost;
   }
 
   findAll() {
     return `This action returns all posts`;
   }
 
-  findOne(id: number) {
+  findPostById(id: number) {
     return `This action returns a #${id} post`;
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+    // const post = this.postModel.findByIdAndUpdate(id, updatePostDto, { new: true });
   }
 
   remove(id: number) {

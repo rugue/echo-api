@@ -7,7 +7,12 @@ import { SettingsModule } from './settings/settings.module';
 import { PostsModule } from './posts/posts.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://localhost/echo'), UsersModule, SettingsModule, PostsModule],
+  imports: [
+    MongooseModule.forRoot('mongodb://localhost/echo'),
+    UsersModule,
+    SettingsModule,
+    PostsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
