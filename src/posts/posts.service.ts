@@ -36,7 +36,9 @@ export class PostsService {
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
-    // const post = this.postModel.findByIdAndUpdate(id, updatePostDto, { new: true });
+    const post = this.postModel.findByIdAndUpdate(id, updatePostDto, {
+      new: true,
+    });
   }
 
   remove(id: number) {

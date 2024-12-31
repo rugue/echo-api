@@ -50,7 +50,7 @@ export class UsersService {
   }
 
   async findAll(): Promise<User[]> {
-    return this.userModel.find().populate('settings').exec();
+    return this.userModel.find().populate(['settings', 'posts']).exec();
   }
 
   findOne(id: number) {
