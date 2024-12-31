@@ -19,7 +19,7 @@ export class UsersService {
   }
 
   async findById(id: string): Promise<User> {
-    return this.userModel.findById(id).exec();
+    return (await this.userModel.findById(id)).populated('settings').exec();
   }
 
   async createUser({
@@ -50,7 +50,7 @@ export class UsersService {
   }
 
   async findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+    return this.userModel.find().populate('settings').exec();
   }
 
   findOne(id: number) {
