@@ -7,6 +7,7 @@ import {
   UserSettings,
   UserSettingsSchema,
 } from 'src/settings/schemas/UserSettings.schema';
+import { ArtistsModule } from 'src/artists/artists.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import {
         collection: 'userSettings',
       },
     ]),
+    ArtistsModule,
   ],
   controllers: [UsersController],
   providers: [UsersService],
