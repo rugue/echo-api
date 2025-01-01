@@ -19,7 +19,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  password: string;
+  password_hash: string;
 
   @IsOptional()
   @ValidateNested()

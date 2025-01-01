@@ -4,7 +4,7 @@ import { Post } from 'src/posts/schema/post.schema';
 import { UserSettings } from 'src/settings/schemas/UserSettings.schema';
 
 export type UserDocument = User & Document;
-@Schema()
+@Schema({ timestamps: true })
 export class User {
   @Prop({ required: true, unique: true })
   username: string;
@@ -17,9 +17,6 @@ export class User {
 
   @Prop({ default: 'user' }) // role: user or artist
   role: string;
-
-  @Prop({ default: Date.now })
-  created_at: Date;
 
   // @Prop()
   // name?: string;

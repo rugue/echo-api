@@ -3,7 +3,7 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "username": "newuser",
+  "username": "newuser2",
   "email": "newuser@example.com",
   "password_hash": "password123"
 }
@@ -12,10 +12,10 @@ Content-Type: application/json
 GET http://localhost:3000/users
 
 ### Get a user by ID
-GET http://localhost:3000/users/67757a1915c5bfabeec231f7
+GET http://localhost:3000/users/6775b3c09f1135a6b9735899
 
 ### Update a user
-PATCH http://localhost:3000/users/67757a1915c5bfabeec231f7
+PATCH http://localhost:3000/users/6775b3c09f1135a6b9735899
 Content-Type: application/json
 
 {
@@ -54,3 +54,35 @@ Content-Type: application/json
 
 ### Delete a post
 DELETE http://localhost:3000/posts/677582cf06140e6882d0119f
+
+
+
+
+### Create a new artist
+POST http://localhost:3000/artists
+Content-Type: application/json
+
+{
+  "name": "newartist",
+  "bio": "This is a new artist.",
+  "genre": "Rock"
+}
+
+### Get all artists
+GET http://localhost:3000/artists
+
+### Get an artist by ID
+GET http://localhost:3000/artists/6775b1e3a186aed400ae3ab2
+
+### Update an artist
+PATCH http://localhost:3000/artists/6775b1e3a186aed400ae3ab2
+Content-Type: application/json
+
+{
+  "name": "updatedartist",
+  "bio": "This is an updated artist bio.",
+  "genre": "Jazz"
+}
+
+### Delete an artist
+DELETE http://localhost:3000/artists/6775b1e3a186aed400ae3ab2
