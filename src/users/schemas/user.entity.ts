@@ -1,10 +1,10 @@
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { Post } from 'src/posts/schema/post.schema';
 import { UserSettings } from 'src/settings/schemas/UserSettings.schema';
 
 export type UserDocument = User & Document;
-
+@Schema()
 export class User {
   @Prop({ required: true, unique: true })
   email: string;

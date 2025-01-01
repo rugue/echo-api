@@ -13,10 +13,10 @@ Content-Type: application/json
 GET http://localhost:3000/users
 
 ### Get a user by ID
-GET http://localhost:3000/users/{{userId}}
+GET http://localhost:3000/users/677531fcbcacbfa59f293a5f
 
 ### Update a user
-PATCH http://localhost:3000/users/{{userId}}
+PATCH http://localhost:3000/users/677531fcbcacbfa59f293a5f
 Content-Type: application/json
 
 {
@@ -25,7 +25,7 @@ Content-Type: application/json
 }
 
 ### Delete a user
-DELETE http://localhost:3000/users/{{userId}}
+DELETE http://localhost:3000/users/677531fcbcacbfa59f293a5f
 
 ### Create a new post
 POST http://localhost:3000/posts
@@ -33,18 +33,18 @@ Content-Type: application/json
 
 {
   "title": "New Post",
-  "content": "This is the content of the new post",
-  "userId": "{{userId}}"
+  "contents": "This is the content of the new post",
+  "userId": "67757a1915c5bfabeec231f7"
 }
 
 ### Get all posts
 GET http://localhost:3000/posts
 
 ### Get a post by ID
-GET http://localhost:3000/posts/{{postId}}
+GET http://localhost:3000/posts/6775822d06140e6882d0119b
 
 ### Update a post
-PATCH http://localhost:3000/posts/{{postId}}
+PATCH http://localhost:3000/posts/6775822d06140e6882d0119b
 Content-Type: application/json
 
 {
@@ -53,4 +53,4 @@ Content-Type: application/json
 }
 
 ### Delete a post
-DELETE http://localhost:3000/posts/{{postId}}
+DELETE http://localhost:3000/posts/677582cf06140e6882d0119f

@@ -28,20 +28,20 @@ export class PostsService {
   }
 
   findAll() {
-    return `This action returns all posts`;
+    return this.postModel.find().exec();
   }
 
-  findPostById(id: number) {
-    return `This action returns a #${id} post`;
+  findPostById(id: string) {
+    return this.postModel.findById(id).exec();
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    const post = this.postModel.findByIdAndUpdate(id, updatePostDto, {
-      new: true,
-    });
+  async update(id: string, updatePostDto: UpdatePostDto): Promise<Post> {
+    return this.postModel
+      .findByIdAndUpdate(id, updatePostDto, { new: true })
+      .exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(id: string): Promise<Post> {
+    return this.postModel.findByIdAndDelete(id).exec();
   }
 }

@@ -19,7 +19,7 @@ export class UsersService {
   }
 
   async findById(id: string): Promise<User> {
-    return (await this.userModel.findById(id)).populated('settings').exec();
+    return this.userModel.findById(id).populate('settings').exec();
   }
 
   async createUser({
