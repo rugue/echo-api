@@ -9,11 +9,14 @@ import {
   HttpException,
   UsePipes,
   ValidationPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import mongoose from 'mongoose';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
 
 @Controller('users')
 export class UsersController {
@@ -25,6 +28,7 @@ export class UsersController {
     return this.usersService.createUser(createUserDto);
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
   async findAll() {
     return this.usersService.findAll();
@@ -44,6 +48,7 @@ export class UsersController {
     return findUser;
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch(':id')
   @UsePipes(new ValidationPipe())
   async updateUser(
@@ -57,6 +62,7 @@ export class UsersController {
     return updatedUser;
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const isValid = mongoose.Types.ObjectId.isValid(id);

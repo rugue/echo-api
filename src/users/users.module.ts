@@ -8,6 +8,7 @@ import {
   UserSettingsSchema,
 } from 'src/settings/schemas/UserSettings.schema';
 import { ArtistsModule } from 'src/artists/artists.module';
+import { Artist, ArtistSchema } from 'src/artists/entities/artist.entity';
 
 @Module({
   imports: [
@@ -18,10 +19,12 @@ import { ArtistsModule } from 'src/artists/artists.module';
         schema: UserSettingsSchema,
         collection: 'userSettings',
       },
+      { name: Artist.name, schema: ArtistSchema },
     ]),
     ArtistsModule,
   ],
   controllers: [UsersController],
   providers: [UsersService],
+  exports: [UsersService],
 })
 export class UsersModule {}

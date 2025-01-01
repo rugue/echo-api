@@ -10,6 +10,6 @@ import { Artist, ArtistSchema } from './entities/artist.entity';
   ],
   controllers: [ArtistsController],
   providers: [ArtistsService],
-  exports: [MongooseModule],
+  exports: [ArtistsService],
 })
 export class ArtistsModule {}

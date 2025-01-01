@@ -26,6 +26,9 @@ export class UsersService {
       .populate(['settings', 'posts', 'artist'])
       .exec();
   }
+  async findByUsername(username: string): Promise<User> {
+    return this.userModel.findOne({ username }).exec();
+  }
 
   async createUser({
     settings,
