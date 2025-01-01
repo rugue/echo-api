@@ -3,25 +3,25 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
+  "username": "newuser",
   "email": "newuser@example.com",
-  "password": "password123",
-  "role": "user",
-  "name": "New User"
+  "password_hash": "password123"
 }
 
 ### Get all users
 GET http://localhost:3000/users
 
 ### Get a user by ID
-GET http://localhost:3000/users/677531fcbcacbfa59f293a5f
+GET http://localhost:3000/users/67757a1915c5bfabeec231f7
 
 ### Update a user
-PATCH http://localhost:3000/users/677531fcbcacbfa59f293a5f
+PATCH http://localhost:3000/users/67757a1915c5bfabeec231f7
 Content-Type: application/json
 
 {
+  "username": "updateduser",
   "email": "updateduser@example.com",
-  "name": "Updated User"
+  "password_hash": "newpassword123"
 }
 
 ### Delete a user

@@ -53,10 +53,6 @@ export class UsersService {
     return this.userModel.find().populate(['settings', 'posts']).exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
   remove(id: string) {
     return this.userModel.findByIdAndDelete(id);
   }

@@ -9,6 +9,10 @@ import {
 import { CreateUserSettingsDto } from 'src/settings/dto/create-user-settings.dto';
 
 export class CreateUserDto {
+  @IsString()
+  @IsNotEmpty()
+  username: string;
+
   @IsEmail()
   @IsNotEmpty()
   email: string;
@@ -16,14 +20,6 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   password: string;
-
-  @IsOptional()
-  @IsString()
-  role?: string;
-
-  @IsOptional()
-  @IsString()
-  name?: string;
 
   @IsOptional()
   @ValidateNested()

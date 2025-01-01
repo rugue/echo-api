@@ -7,16 +7,22 @@ export type UserDocument = User & Document;
 @Schema()
 export class User {
   @Prop({ required: true, unique: true })
+  username: string;
+
+  @Prop({ required: true, unique: true })
   email: string;
 
   @Prop({ required: true })
-  password: string;
+  password_hash: string;
 
   @Prop({ default: 'user' }) // role: user or artist
   role: string;
 
-  @Prop()
-  name?: string;
+  @Prop({ default: Date.now })
+  created_at: Date;
+
+  // @Prop()
+  // name?: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'UserSettings' })
   settings?: UserSettings;
