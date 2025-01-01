@@ -1,0 +1,56 @@
+### Create a new user
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "newuser@example.com",
+  "password": "password123",
+  "role": "user",
+  "name": "New User"
+}
+
+### Get all users
+GET http://localhost:3000/users
+
+### Get a user by ID
+GET http://localhost:3000/users/{{userId}}
+
+### Update a user
+PATCH http://localhost:3000/users/{{userId}}
+Content-Type: application/json
+
+{
+  "email": "updateduser@example.com",
+  "name": "Updated User"
+}
+
+### Delete a user
+DELETE http://localhost:3000/users/{{userId}}
+
+### Create a new post
+POST http://localhost:3000/posts
+Content-Type: application/json
+
+{
+  "title": "New Post",
+  "content": "This is the content of the new post",
+  "userId": "{{userId}}"
+}
+
+### Get all posts
+GET http://localhost:3000/posts
+
+### Get a post by ID
+GET http://localhost:3000/posts/{{postId}}
+
+### Update a post
+PATCH http://localhost:3000/posts/{{postId}}
+Content-Type: application/json
+
+{
+  "title": "Updated Post Title",
+  "content": "Updated content of the post"
+}
+
+### Delete a post
+DELETE http://localhost:3000/posts/{{postId}}
