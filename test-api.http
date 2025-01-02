@@ -3,24 +3,33 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "username": "newuser2",
-  "email": "newuser@example.com",
+  "username": "newuser10",
+  "email": "newus20@example.com",
   "password_hash": "password123"
+}
+
+### Login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "username": "newuser10",
+  "password": "password123"
 }
 
 ### Get all users
 GET http://localhost:3000/users
 
 ### Get a user by ID
-GET http://localhost:3000/users/6775b3c09f1135a6b9735899
+GET http://localhost:3000/users/6775dcfe901bac204899d7ca
 
 ### Update a user
-PATCH http://localhost:3000/users/6775b3c09f1135a6b9735899
+PATCH http://localhost:3000/users/6775dcfe901bac204899d7ca
 Content-Type: application/json
 
 {
   "username": "updateduser",
-  "email": "updateduser@example.com",
+  "email": "updateduse@example.com",
   "password_hash": "newpassword123"
 }
 

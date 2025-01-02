@@ -1,5 +1,5 @@
 export const jwtConstants = {
-  secret: 'secretKey',
+  secret: 'your-secret-key',
   expiresIn: '60m',
 };
 
