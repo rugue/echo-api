@@ -7,10 +7,17 @@ import { SettingsModule } from './settings/settings.module';
 import { PostsModule } from './posts/posts.module';
 import { ArtistsModule } from './artists/artists.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/echo'),
+    ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.getOrThrow('MONGODB_URI'),
+      }),
+      inject: [ConfigService],
+    }),
     UsersModule,
     SettingsModule,
     PostsModule,
