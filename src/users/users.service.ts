@@ -10,7 +10,7 @@ import { Artist } from 'src/artists/entities/artist.entity';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     @InjectModel(UserSettings.name)
     private userSettingsModel: Model<UserSettings>,
     @InjectModel(Artist.name) private artistModel: Model<Artist>,
