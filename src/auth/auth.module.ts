@@ -6,8 +6,8 @@ import { ArtistsModule } from 'src/artists/artists.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from 'src/constants';
-import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
+import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
   imports: [
