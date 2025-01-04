@@ -6,6 +6,7 @@ import { User, UserDocument } from './schemas/user.entity';
 import { Model } from 'mongoose';
 import { UserSettings } from 'src/settings/schemas/UserSettings.schema';
 import { Artist } from 'src/artists/entities/artist.entity';
+import { hash } from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
@@ -34,6 +35,7 @@ export class UsersService {
     settings,
     ...createUserDto
   }: CreateUserDto): Promise<User> {
+    const hashedPassword = await hash(createUserDto.password_hash, 10);
     if (settings) {
       const newSettings = new this.userSettingsModel(settings);
       const savedNewSettings = await newSettings.save();
@@ -41,10 +43,14 @@ export class UsersService {
       const newUser = new this.userModel({
         ...createUserDto,
         settings: savedNewSettings._id,
+        password_hash: hashedPassword,
       });
       return newUser.save();
     }
-    const newUser = new this.userModel(createUserDto);
+    const newUser = new this.userModel({
+      ...createUserDto,
+      password_hash: hashedPassword,
+    });
     return newUser.save();
   }
 
