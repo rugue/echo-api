@@ -1,11 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, SchemaTypes, Types } from 'mongoose';
 import { Post } from 'src/posts/schema/post.schema';
 import { UserSettings } from 'src/settings/schemas/UserSettings.schema';
 
 export type UserDocument = User & Document;
 @Schema({ timestamps: true })
 export class User {
+  @Prop({ type: SchemaTypes.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
   @Prop({ required: true, unique: true })
   username: string;
 
@@ -14,6 +17,9 @@ export class User {
 
   @Prop({ required: true })
   password_hash: string;
+
+  @Prop()
+  refreshToken?: string;
 
   @Prop({ default: 'user' }) // role: user or artist
   role: string;
