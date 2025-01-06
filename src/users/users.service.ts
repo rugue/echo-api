@@ -68,9 +68,9 @@ export class UsersService {
       .exec();
   }
 
-  async findAll(): Promise<User[]> {
+  async getUsers(): Promise<User[]> {
     return this.userModel
-      .find()
+      .find({})
       .populate(['settings', 'posts', 'artist'])
       .exec();
   }
