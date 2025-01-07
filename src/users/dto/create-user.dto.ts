@@ -21,6 +21,10 @@ export class CreateUserDto {
   @IsNotEmpty()
   password_hash: string;
 
+  @IsString()
+  @IsNotEmpty()
+  refreshToken?: string;
+
   @IsOptional()
   @ValidateNested()
   @Type(() => CreateUserSettingsDto)

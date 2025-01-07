@@ -60,7 +60,10 @@ export class UsersController {
   ) {
     const isValid = mongoose.Types.ObjectId.isValid(id);
     if (!isValid) throw new HttpException('Invalid ID', 400);
-    const updatedUser = await this.usersService.updateUser(id, updateUserDto);
+    const updatedUser = await this.usersService.updateUser(
+      { _id: id },
+      updateUserDto,
+    );
     if (!updatedUser) throw new HttpException('User not found', 404);
     return updatedUser;
   }

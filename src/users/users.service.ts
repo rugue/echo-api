@@ -60,11 +60,11 @@ export class UsersService {
   }
 
   async updateUser(
-    userId: string,
+    query: FilterQuery<User>,
     updateUserDto: UpdateUserDto,
   ): Promise<User> {
     return this.userModel
-      .findByIdAndUpdate(userId, updateUserDto, { new: true })
+      .findByIdAndUpdate(query, updateUserDto, { new: true })
       .exec();
   }
 
