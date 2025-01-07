@@ -72,7 +72,7 @@ export class AuthService {
 
     await this.usersService.updateUser(
       { _id: user._id },
-      { $set: { refreshToken: await hash(refreshToken, 10) } },
+      { refreshToken: await hash(refreshToken, 10) },
     );
 
     response.cookie('Authentication', accessToken, {

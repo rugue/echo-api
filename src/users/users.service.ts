@@ -64,10 +64,13 @@ export class UsersService {
     updateUserDto: UpdateUserDto,
   ): Promise<User> {
     return this.userModel
-      .findByIdAndUpdate(query, updateUserDto, { new: true })
+      .findOneAndUpdate(query, updateUserDto, { new: true })
       .exec();
   }
 
+  // async updateUser(query: FilterQuery<User>, data: UpdateQuery<User>) {
+  //   return this.userModel.findOneAndUpdate(query, data);
+  // }
   async getUsers(): Promise<User[]> {
     return this.userModel
       .find({})
