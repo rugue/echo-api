@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "username": "newuser11",
-  "email": "newus21@example.com",
+  "email": "newuser11@example.com",
   "password_hash": "password123"
 }
 
@@ -13,37 +13,38 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "username": "newuser10",
+  "email": "newuser11@example.com",
   "password": "password123"
 }
 
-### Login
-POST http://localhost:3000/auth/login
+### Refresh Token
+POST http://localhost:3000/auth/refresh
 Content-Type: application/json
+Cookie: Refresh=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdkMzdhNjM0ZDkyMTA2ZmZmMjkxMTEiLCJpYXQiOjE3MzYyNjEwNzksImV4cCI6MTczNjg2NTg3OX0.CbfPZVIO6gg4uxfBxEkNdBi5qw4vPIAN_y3O4Fy1IxU
 
-{
-  "email": "newus21@example.com",
-  "password": "password123"
-}
-
-### Get all users
+### Get all users (requires JWT)
 GET http://localhost:3000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdkMzdhNjM0ZDkyMTA2ZmZmMjkxMTEiLCJpYXQiOjE3MzYyNjExOTEsImV4cCI6MTczNjI2NDc5MX0.moh5_uc5AH2yUSC6qBGUSi1pN1DCs8-8Z6qxDOI-BZc
 
-### Get a user by ID
-GET http://localhost:3000/users/6775dcfe901bac204899d7ca
+### Get user by ID (requires JWT)
+GET http://localhost:3000/users/6775b3c09f1135a6b9735899
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdkMzdhNjM0ZDkyMTA2ZmZmMjkxMTEiLCJpYXQiOjE3MzYyNjExOTEsImV4cCI6MTczNjI2NDc5MX0.moh5_uc5AH2yUSC6qBGUSi1pN1DCs8-8Z6qxDOI-BZc
 
-### Update a user
-PATCH http://localhost:3000/users/6775dcfe901bac204899d7ca
+### Update user by ID (requires JWT)
+PATCH http://localhost:3000/users/6775b3c09f1135a6b9735899
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdkMzdhNjM0ZDkyMTA2ZmZmMjkxMTEiLCJpYXQiOjE3MzYyNjExOTEsImV4cCI6MTczNjI2NDc5MX0.moh5_uc5AH2yUSC6qBGUSi1pN1DCs8-8Z6qxDOI-BZc
 
 {
-  "username": "updateduser",
-  "email": "updateduse@example.com",
-  "password_hash": "newpassword123"
+  "username": "updateduser11",
+  "email": "updateduser11@example.com"
 }
 
-### Delete a user
-DELETE http://localhost:3000/users/677531fcbcacbfa59f293a5f
+### Delete user by ID (requires JWT)
+DELETE http://localhost:3000/users/6775b3c09f1135a6b9735899
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdkMzdhNjM0ZDkyMTA2ZmZmMjkxMTEiLCJpYXQiOjE3MzYyNjExOTEsImV4cCI6MTczNjI2NDc5MX0.moh5_uc5AH2yUSC6qBGUSi1pN1DCs8-8Z6qxDOI-BZc
+
+
 
 ### Create a new post
 POST http://localhost:3000/posts

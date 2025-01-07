@@ -21,8 +21,8 @@ export class CreateUserDto {
   @IsNotEmpty()
   password_hash: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
   refreshToken?: string;
 
   @IsOptional()
