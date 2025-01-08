@@ -4,23 +4,30 @@ import { UpdateAlbumDto } from './dto/update-album.dto';
 
 @Injectable()
 export class AlbumsService {
-  create(createAlbumDto: CreateAlbumDto) {
-    return 'This action adds a new album';
+  constructor(
+    @InjectModel(Album.name) private albumModel: Model<AlbumDocument>,
+  ) {}
+  async create(createAlbumDto: CreateAlbumDto): Promise<Album> {
+    const newAlbum = new this.albumModel(createAlbumDto);
+    return newAlbum.save();
   }
 
-  findAll() {
-    return `This action returns all albums`;
+  async findAll(): Promise<Album[]> {
+    return this.albumModel.find().populate('artist').exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} album`;
+  async findOne(id: string): Promise<Album> {
+    return this.albumModel.findById(id).populate('artist').exec();
   }
 
-  update(id: number, updateAlbumDto: UpdateAlbumDto) {
-    return `This action updates a #${id} album`;
+  async update(id: string, updateAlbumDto: UpdateAlbumDto): Promise<Album> {
+    return this.albumModel
+      .findByIdAndUpdate(id, updateAlbumDto, { new: true })
+      .populate('artist')
+      .exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} album`;
+  async remove(id: string): Promise<Album> {
+    return this.albumModel.findByIdAndDelete(id).exec();
   }
 }
