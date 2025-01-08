@@ -23,20 +23,29 @@ import { Song } from './entities/song.entity';
 @ApiTags('songs')
 @Controller('songs')
 export class SongsController {
-  constructor(private readonly songsService: SongsService) {}
+  constructor(
+    private readonly songsService: SongsService,
+    private readonly filesService: FilesService,
+  ) {}
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Artist)
   @UsePipes(new ValidationPipe())
+  @UseInterceptors(
+    FileInterceptor('file', this.filesService.getMulterOptions()),
+  )
   @ApiBody({ type: CreateSongDto })
   @ApiResponse({
     status: 201,
     description: 'Song successfully created.',
     type: Song,
   })
-  create(@Body() createSongDto: CreateSongDto) {
-    return this.songsService.create(createSongDto);
+  create(
+    @Body() createSongDto: CreateSongDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.songsService.create(createSongDto, file.path);
   }
 
   @Get()
@@ -76,5 +85,24 @@ export class SongsController {
   @ApiResponse({ status: 404, description: 'Song not found' })
   remove(@Param('id') id: string) {
     return this.songsService.remove(id);
+  }
+
+  @Get('stream/:id')
+  @ApiParam({ name: 'id', description: 'The ID of the song' })
+  @ApiResponse({ status: 200, description: 'Streaming song' })
+  async stream(@Param('id') id: string, @Res() res: Response) {
+    const song = await this.songsService.findOne(id);
+    if (!song) {
+      res.status(404).send('Song not found');
+      return;
+    }
+
+    const filePath = join(process.cwd(), song.filePath);
+    const file = createReadStream(filePath);
+    res.set({
+      'Content-Type': 'audio/mpeg',
+      'Content-Disposition': `inline; filename="${song.title}.mp3"`,
+    });
+    file.pipe(res);
   }
 }
