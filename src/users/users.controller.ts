@@ -24,10 +24,18 @@ import { ApiBody, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly filesService: FilesService,
+  ) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @UsePipes(new ValidationPipe())
+  @Roles(Role.Artist)
+  @UseInterceptors(
+    FileInterceptor('file', this.filesService.getMulterOptions()),
+  )
   @ApiBody({ type: CreateUserDto })
   @ApiResponse({
     status: 201,
