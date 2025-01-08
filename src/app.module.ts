@@ -13,6 +13,7 @@ import { SongsModule } from './songs/songs.module';
 import { PlaylistsModule } from './playlists/playlists.module';
 import { PlaylistSongsModule } from './playlist-songs/playlist-songs.module';
 import { LikesModule } from './likes/likes.module';
+import { FollowsModule } from './follows/follows.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { LikesModule } from './likes/likes.module';
     PlaylistsModule,
     PlaylistSongsModule,
     LikesModule,
+    FollowsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
