@@ -9,8 +9,8 @@ import { Song, SongDocument } from './entities/song.entity';
 export class SongsService {
   constructor(@InjectModel(Song.name) private songModel: Model<SongDocument>) {}
 
-  async create(createSongDto: CreateSongDto): Promise<Song> {
-    const newSong = new this.songModel(createSongDto);
+  async create(createSongDto: CreateSongDto, filePath: string): Promise<Song> {
+    const newSong = new this.songModel({ ...createSongDto, filePath });
     return newSong.save();
   }
 
