@@ -14,6 +14,7 @@ import { PlaylistsModule } from './playlists/playlists.module';
 import { PlaylistSongsModule } from './playlist-songs/playlist-songs.module';
 import { LikesModule } from './likes/likes.module';
 import { FollowsModule } from './follows/follows.module';
+import { StreamingHistoryModule } from './streaming_history/streaming_history.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { FollowsModule } from './follows/follows.module';
     PlaylistSongsModule,
     LikesModule,
     FollowsModule,
+    StreamingHistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
