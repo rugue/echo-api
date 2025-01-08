@@ -1,26 +1,46 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateNotificationDto } from './dto/create-notification.dto';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
+import {
+  Notification,
+  NotificationDocument,
+} from './entities/notification.entity';
 
 @Injectable()
 export class NotificationsService {
-  create(createNotificationDto: CreateNotificationDto) {
-    return 'This action adds a new notification';
+  constructor(
+    @InjectModel(Notification.name)
+    private notificationModel: Model<NotificationDocument>,
+  ) {}
+
+  async create(
+    createNotificationDto: CreateNotificationDto,
+  ): Promise<Notification> {
+    const newNotification = new this.notificationModel(createNotificationDto);
+    return newNotification.save();
   }
 
-  findAll() {
-    return `This action returns all notifications`;
+  async findAll(): Promise<Notification[]> {
+    return this.notificationModel.find().populate('user').exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} notification`;
+  async findOne(id: string): Promise<Notification> {
+    return this.notificationModel.findById(id).populate('user').exec();
   }
 
-  update(id: number, updateNotificationDto: UpdateNotificationDto) {
-    return `This action updates a #${id} notification`;
+  async update(
+    id: string,
+    updateNotificationDto: UpdateNotificationDto,
+  ): Promise<Notification> {
+    return this.notificationModel
+      .findByIdAndUpdate(id, updateNotificationDto, { new: true })
+      .populate('user')
+      .exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} notification`;
+  async remove(id: string): Promise<Notification> {
+    return this.notificationModel.findByIdAndDelete(id).exec();
   }
 }
