@@ -1,26 +1,40 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
 import { UpdatePlaylistDto } from './dto/update-playlist.dto';
+import { Playlist, PlaylistDocument } from './entities/playlist.entity';
 
 @Injectable()
 export class PlaylistsService {
-  create(createPlaylistDto: CreatePlaylistDto) {
-    return 'This action adds a new playlist';
+  constructor(
+    @InjectModel(Playlist.name) private playlistModel: Model<PlaylistDocument>,
+  ) {}
+
+  async create(createPlaylistDto: CreatePlaylistDto): Promise<Playlist> {
+    const newPlaylist = new this.playlistModel(createPlaylistDto);
+    return newPlaylist.save();
   }
 
-  findAll() {
-    return `This action returns all playlists`;
+  async findAll(): Promise<Playlist[]> {
+    return this.playlistModel.find().populate('user').exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} playlist`;
+  async findOne(id: string): Promise<Playlist> {
+    return this.playlistModel.findById(id).populate('user').exec();
   }
 
-  update(id: number, updatePlaylistDto: UpdatePlaylistDto) {
-    return `This action updates a #${id} playlist`;
+  async update(
+    id: string,
+    updatePlaylistDto: UpdatePlaylistDto,
+  ): Promise<Playlist> {
+    return this.playlistModel
+      .findByIdAndUpdate(id, updatePlaylistDto, { new: true })
+      .populate('user')
+      .exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} playlist`;
+  async remove(id: string): Promise<Playlist> {
+    return this.playlistModel.findByIdAndDelete(id).exec();
   }
 }
