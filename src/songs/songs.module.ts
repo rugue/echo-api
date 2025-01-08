@@ -11,7 +11,7 @@ import { AlbumsModule } from 'src/albums/albums.module';
     AlbumsModule,
   ],
   controllers: [SongsController],
-  providers: [SongsService],
+  providers: [SongsService, FilesService],
   exports: [SongsService],
 })
 export class SongsModule {}
