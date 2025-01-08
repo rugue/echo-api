@@ -15,6 +15,7 @@ import { PlaylistSongsModule } from './playlist-songs/playlist-songs.module';
 import { LikesModule } from './likes/likes.module';
 import { FollowsModule } from './follows/follows.module';
 import { StreamingHistoryModule } from './streaming_history/streaming_history.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { StreamingHistoryModule } from './streaming_history/streaming_history.mo
     LikesModule,
     FollowsModule,
     StreamingHistoryModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
