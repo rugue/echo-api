@@ -31,6 +31,10 @@ export class Song {
   @Prop({ type: SchemaTypes.ObjectId, ref: 'Album', required: true })
   album: Album;
 
+  @ApiProperty({ description: 'The file path of the song' })
+  @Prop({ required: true })
+  filePath: string;
+
   @ApiProperty({ description: 'The creation date of the song' })
   @Prop({ type: Date, default: Date.now })
   createdAt: Date;
