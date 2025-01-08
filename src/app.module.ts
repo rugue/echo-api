@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AlbumsModule } from './albums/albums.module';
 import { SongsModule } from './songs/songs.module';
+import { PlaylistsModule } from './playlists/playlists.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { SongsModule } from './songs/songs.module';
     AuthModule,
     AlbumsModule,
     SongsModule,
+    PlaylistsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
