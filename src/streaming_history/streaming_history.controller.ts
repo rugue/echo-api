@@ -10,7 +10,7 @@ import {
   ValidationPipe,
   UseGuards,
 } from '@nestjs/common';
-import { StreamingHistoryService } from './streaming-history.service';
+import { StreamingHistoryService } from './streaming_history.service';
 import { CreateStreamingHistoryDto } from './dto/create-streaming-history.dto';
 import { UpdateStreamingHistoryDto } from './dto/update-streaming-history.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';

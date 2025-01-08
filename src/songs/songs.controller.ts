@@ -9,6 +9,9 @@ import {
   UsePipes,
   ValidationPipe,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  Res,
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './dto/create-song.dto';
@@ -19,6 +22,12 @@ import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
 import { ApiTags, ApiBody, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { Song } from './entities/song.entity';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesService } from 'src/files/files.service';
+import { Response } from 'express';
+import { createReadStream } from 'fs';
+import { join } from 'path';
+import { Express } from 'express';
 
 @ApiTags('songs')
 @Controller('songs')

@@ -6,10 +6,19 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
+  ValidationPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { AlbumsService } from './albums.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from 'src/auth/role.enum';
+import { ApiTags, ApiBody, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { Album } from './entities/album.entity';
 
 @ApiTags('albums')
 @Controller('albums')
