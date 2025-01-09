@@ -54,7 +54,21 @@ export class SongsController {
     @Body() createSongDto: CreateSongDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
+    if (!file) {
+      throw new Error('File upload failed');
+    }
     return this.songsService.create(createSongDto, file.path);
+  }
+
+  @Post('upload')
+  @UseInterceptors(
+    FileInterceptor('file', this.filesService.getMulterOptions()),
+  )
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    if (!file) {
+      throw new Error('File upload failed');
+    }
+    return { message: 'File uploaded successfully', filePath: file.path };
   }
 
   @Get()
