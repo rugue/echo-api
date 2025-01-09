@@ -42,6 +42,10 @@ export class Song {
   @ApiProperty({ description: 'The last update date of the song' })
   @Prop({ type: Date, default: Date.now })
   updatedAt: Date;
+
+  @ApiProperty({ description: 'The artist who uploads song' })
+  @Prop({ required: true })
+  artist: string;
 }
 
 export const SongSchema = SchemaFactory.createForClass(Song);

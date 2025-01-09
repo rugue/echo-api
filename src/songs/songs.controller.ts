@@ -26,7 +26,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { FilesService } from 'src/files/files.service';
 import { Response } from 'express';
 import { createReadStream } from 'fs';
-import { join } from 'path';
+import { extname, join } from 'path';
 import { Express } from 'express';
 
 @ApiTags('songs')
@@ -42,7 +42,12 @@ export class SongsController {
   @Roles(Role.Artist)
   @UsePipes(new ValidationPipe())
   @UseInterceptors(
-    FileInterceptor('file', this.filesService.getMulterOptions()),
+    (req, res, next) =>
+      new (FileInterceptor('file', this.filesService.getMulterOptions()))(
+        req,
+        res,
+        next,
+      ),
   )
   @ApiBody({ type: CreateSongDto })
   @ApiResponse({
@@ -50,25 +55,22 @@ export class SongsController {
     description: 'Song successfully created.',
     type: Song,
   })
-  create(
+  async create(
     @Body() createSongDto: CreateSongDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
     if (!file) {
       throw new Error('File upload failed');
     }
-    return this.songsService.create(createSongDto, file.path);
-  }
-
-  @Post('upload')
-  @UseInterceptors(
-    FileInterceptor('file', this.filesService.getMulterOptions()),
-  )
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    if (!file) {
-      throw new Error('File upload failed');
+    // Only allow specific file types
+    if (!['.mp3', '.wav'].includes(extname(file.originalname).toLowerCase())) {
+      throw new Error(
+        'Invalid file format. Only .mp3 and .wav files are allowed.',
+      );
     }
-    return { message: 'File uploaded successfully', filePath: file.path };
+
+    const song = await this.songsService.create(createSongDto, file.path);
+    return song;
   }
 
   @Get()

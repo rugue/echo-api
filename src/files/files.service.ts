@@ -4,8 +4,12 @@ import { extname } from 'path';
 
 @Injectable()
 export class FilesService {
-  storage = diskStorage({
-    destination: './uploads',
+  private readonly uploadPath = './uploads';
+
+  readonly storage = diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, this.uploadPath);
+    },
     filename: (req, file, cb) => {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
       const ext = extname(file.originalname);

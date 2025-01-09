@@ -26,4 +26,10 @@ export class CreateSongDto {
   @IsString()
   @IsNotEmpty()
   album: string;
+
+  @IsString()
+  @IsNotEmpty()
+  artist: string;
+
+  filePath?: string;
 }
