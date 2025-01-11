@@ -6,12 +6,11 @@ import {
   Patch,
   Param,
   Delete,
-  UsePipes,
-  ValidationPipe,
   UseGuards,
   UseInterceptors,
   UploadedFile,
   Res,
+  ParseFilePipe,
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './dto/create-song.dto';
@@ -26,8 +25,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { FilesService } from 'src/files/files.service';
 import { Response } from 'express';
 import { createReadStream } from 'fs';
-import { extname, join } from 'path';
+import { join } from 'path';
 import { Express } from 'express';
+import { FileSizeValidationPipe } from './pipes/file-size-validation.pipe';
+import { FileTypeValidationPipe } from './pipes/file-type-validation.pipe';
 
 @ApiTags('songs')
 @Controller('songs')
@@ -40,48 +41,66 @@ export class SongsController {
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Artist)
-  @UsePipes(new ValidationPipe())
-  @UseInterceptors(
-    (req, res, next) =>
-      new (FileInterceptor('file', this.filesService.getMulterOptions()))(
-        req,
-        res,
-        next,
-      ),
-  )
-  @ApiBody({ type: CreateSongDto })
-  @ApiResponse({
-    status: 201,
-    description: 'Song successfully created.',
-    type: Song,
-  })
-  async create(
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(
     @Body() createSongDto: CreateSongDto,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile(
+      new FileSizeValidationPipe(),
+      new FileTypeValidationPipe(),
+      new ParseFilePipe(),
+    )
+    file: Express.Multer.File,
   ) {
-    if (!file) {
-      throw new Error('File upload failed');
-    }
-    // Only allow specific file types
-    if (!['.mp3', '.wav'].includes(extname(file.originalname).toLowerCase())) {
-      throw new Error(
-        'Invalid file format. Only .mp3 and .wav files are allowed.',
-      );
-    }
-
-    const song = await this.songsService.create(createSongDto, file.path);
-    return song;
+    return this.songsService.create(createSongDto, file);
   }
 
+  // @Post()
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.Artist)
+  // @UseInterceptors(
+  //   FileInterceptor('file', this.filesService.getMulterOptions()),
+  // )
+  // @ApiBody({ type: CreateSongDto })
+  // @ApiResponse({
+  //   status: 201,
+  //   description: 'Song successfully created.',
+  //   type: Song,
+  // })
+  // async create(
+  //   @Body() createSongDto: CreateSongDto,
+  //   @UploadedFile() file: Express.Multer.File,
+  // ) {
+  //   if (!file) {
+  //     throw new Error('File upload failed');
+  //   }
+  //   // Only allow specific file types
+  //   if (!['.mp3', '.wav'].includes(extname(file.originalname).toLowerCase())) {
+  //     throw new Error(
+  //       'Invalid file format. Only .mp3 and .wav files are allowed.',
+  //     );
+  //   }
+
+  //   const song = await this.songsService.create(createSongDto, file.path);
+  //   return song;
+  // }
+
   @Get()
-  @ApiResponse({ status: 200, description: 'List of songs', type: [Song] })
+  @ApiResponse({
+    status: 200,
+    description: 'List of songs',
+    type: [Song],
+  })
   findAll() {
     return this.songsService.findAll();
   }
 
   @Get(':id')
   @ApiParam({ name: 'id', description: 'The ID of the song' })
-  @ApiResponse({ status: 200, description: 'Song found', type: Song })
+  @ApiResponse({
+    status: 200,
+    description: 'Song found',
+    type: Song,
+  })
   @ApiResponse({ status: 404, description: 'Song not found' })
   findOne(@Param('id') id: string) {
     return this.songsService.findOne(id);
@@ -106,7 +125,10 @@ export class SongsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Artist)
   @ApiParam({ name: 'id', description: 'The ID of the song' })
-  @ApiResponse({ status: 200, description: 'Song successfully deleted.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Song successfully deleted.',
+  })
   @ApiResponse({ status: 404, description: 'Song not found' })
   remove(@Param('id') id: string) {
     return this.songsService.remove(id);

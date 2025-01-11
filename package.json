@@ -76,7 +76,7 @@
     "moduleFileExtensions": [
       "js",
       "json",
-      "ts"
+      "ts"  'plugin:prettier/recommended',
     ],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",

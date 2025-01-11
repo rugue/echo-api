@@ -18,9 +18,6 @@ export class FilesService {
   });
 
   getMulterOptions() {
-    if (!this.storage) {
-      throw new Error('Multer storage configuration is missing');
-    }
     return {
       storage: this.storage,
     };
