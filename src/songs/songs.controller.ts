@@ -42,7 +42,13 @@ export class SongsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Artist)
   @UseInterceptors(FileInterceptor('file'))
-  uploadFile(
+  @ApiBody({ type: CreateSongDto })
+  @ApiResponse({
+    status: 201,
+    description: 'Song successfully created.',
+    type: Song,
+  })
+  async uploadFile(
     @Body() createSongDto: CreateSongDto,
     @UploadedFile(
       new FileSizeValidationPipe(),

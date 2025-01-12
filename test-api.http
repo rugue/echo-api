@@ -20,15 +20,15 @@ Content-Type: application/json
 ### Refresh Token
 POST http://localhost:3000/auth/refresh
 Content-Type: application/json
-Cookie: Refresh=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdkMzdhNjM0ZDkyMTA2ZmZmMjkxMTEiLCJpYXQiOjE3MzYyNjEwNzksImV4cCI6MTczNjg2NTg3OX0.CbfPZVIO6gg4uxfBxEkNdBi5qw4vPIAN_y3O4Fy1IxU
+Cookie: Refresh=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzgzOTdlYzJiZTkyYzI1NjRmMjIzMGQiLCJpYXQiOjE3MzY2Nzc3MTUsImV4cCI6MTczNzI4MjUxNX0._Q_A_OcGTwvDPS3jY8TwX4BpNp_NZpL0K_hZFj96SwQ
 
 ### Get all users (requires JWT)
 GET http://localhost:3000/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdkMzdhNjM0ZDkyMTA2ZmZmMjkxMTEiLCJpYXQiOjE3MzYyNjExOTEsImV4cCI6MTczNjI2NDc5MX0.moh5_uc5AH2yUSC6qBGUSi1pN1DCs8-8Z6qxDOI-BZc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzgzOTdlYzJiZTkyYzI1NjRmMjIzMGQiLCJpYXQiOjE3MzY2Nzc4MDQsImV4cCI6MTczNjY4MTQwNH0.owhfIoGfJyoIcVXvHIajyGg-69GzydVY2bbM4pLH8sk
 
 ### Get user by ID (requires JWT)
-GET http://localhost:3000/users/6775b3c09f1135a6b9735899
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdkMzdhNjM0ZDkyMTA2ZmZmMjkxMTEiLCJpYXQiOjE3MzYyNjExOTEsImV4cCI6MTczNjI2NDc5MX0.moh5_uc5AH2yUSC6qBGUSi1pN1DCs8-8Z6qxDOI-BZc
+GET http://localhost:3000/users/678397ec2be92c2564f2230d
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzgzOTdlYzJiZTkyYzI1NjRmMjIzMGQiLCJpYXQiOjE3MzY2Nzc4MDQsImV4cCI6MTczNjY4MTQwNH0.owhfIoGfJyoIcVXvHIajyGg-69GzydVY2bbM4pLH8sk
 
 ### Update user by ID (requires JWT)
 PATCH http://localhost:3000/users/6775b3c09f1135a6b9735899
@@ -56,7 +56,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdkM
 
 ### Upload a new song
 POST http://localhost:3000/songs
-Authorization: Bearer YOUR_JWT_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdkMzdhNjM0ZDkyMTA2ZmZmMjkxMTEiLCJpYXQiOjE3MzYyNjExOTEsImV4cCI6MTczNjI2NDc5MX0.moh5_uc5AH2yUSC6qBGUSi1pN1DCs8-8Z6qxDOI-BZc
 Content-Type: multipart/form-data
 
 --boundary
@@ -149,7 +149,7 @@ Content-Type: application/json
 GET http://localhost:3000/artists
 
 ### Get an artist by ID
-GET http://localhost:3000/artists/6775b1e3a186aed400ae3ab2
+GET http://localhost:3000/artists/67839b181a2facbbdab5a46f
 
 ### Update an artist
 PATCH http://localhost:3000/artists/6775b1e3a186aed400ae3ab2

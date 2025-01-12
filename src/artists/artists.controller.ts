@@ -25,7 +25,7 @@ export class ArtistsController {
   constructor(private readonly artistsService: ArtistsService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Artist)
   @UsePipes(new ValidationPipe())
   @ApiBody({ type: CreateArtistDto })
