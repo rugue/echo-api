@@ -46,6 +46,64 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdkM
 
 
 
+
+
+
+
+
+
+
+
+### Upload a new song
+POST http://localhost:3000/songs
+Authorization: Bearer YOUR_JWT_TOKEN
+Content-Type: multipart/form-data
+
+--boundary
+Content-Disposition: form-data; name="title"
+
+Test Song
+--boundary
+Content-Disposition: form-data; name="duration"
+
+300
+--boundary
+Content-Disposition: form-data; name="trackNumber"
+
+1
+--boundary
+Content-Disposition: form-data; name="fileUrl"
+
+http://localhost:3000/uploads/test-song.mp3
+--boundary
+Content-Disposition: form-data; name="album"
+
+ALBUM_ID
+--boundary
+Content-Disposition: form-data; name="artist"
+
+ARTIST_ID
+--boundary
+Content-Disposition: form-data; name="file"; filename="test-song.mp3"
+Content-Type: audio/mpeg
+
+< ./path/to/your/test-song.mp3
+--boundary--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Create a new post
 POST http://localhost:3000/posts
 Content-Type: application/json

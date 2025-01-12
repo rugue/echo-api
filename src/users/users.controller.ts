@@ -27,7 +27,6 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @UsePipes(new ValidationPipe())
   @ApiBody({ type: CreateUserDto })
   @ApiResponse({
