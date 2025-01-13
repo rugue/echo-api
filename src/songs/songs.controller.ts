@@ -11,6 +11,7 @@ import {
   UploadedFile,
   Res,
   ParseFilePipe,
+  BadRequestException,
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './dto/create-song.dto';
@@ -30,8 +31,8 @@ import { Express } from 'express';
 import { FileSizeValidationPipe } from './pipes/file-size-validation.pipe';
 import { FileTypeValidationPipe } from './pipes/file-type-validation.pipe';
 
-@ApiTags('songs')
-@Controller('songs')
+@ApiTags('upload')
+@Controller('upload')
 export class SongsController {
   constructor(
     private readonly songsService: SongsService,
@@ -57,8 +58,9 @@ export class SongsController {
     )
     file: Express.Multer.File,
   ) {
+    console.log(file);
     if (!file) {
-      throw new Error('File upload failed');
+      throw new BadRequestException('No file provided.');
     }
     createSongDto.fileUrl = `${process.env.BASE_URL}/uploads/${file.filename}`;
     console.log('Received data:', createSongDto);

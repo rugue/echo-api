@@ -1,10 +1,15 @@
-import { PipeTransform, Injectable } from '@nestjs/common';
+import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class FileSizeValidationPipe implements PipeTransform {
   transform(value: any) {
-    // "value" is an object containing the file's attributes and metadata
-    const allowedSized = 15 * 1024;
-    return value.size <= allowedSized;
+    if (!value) {
+      throw new BadRequestException('No file provided.');
+    }
+    if (value.size > 5 * 1024 * 1024) {
+      // Example: 5MB limit
+      throw new BadRequestException('File size exceeds the allowed limit.');
+    }
+    return value;
   }
 }

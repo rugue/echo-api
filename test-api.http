@@ -100,9 +100,9 @@ Content-Type: audio/mpeg
 
 ### Upload a new song
 
-POST http://localhost:3000/songs
+POST http://localhost:3000/songs/upload
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzgzZDYxMzczY2YxOTU4MWMzMGIwMGYiLCJpYXQiOjE3MzY3MzExNTEsImV4cCI6MTczNjczNDc1MX0.4y-J_qYKwQ9PNU3v965Hu8Ex7RcyCD0pMFToSUBp2to
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzgzZDYxMzczY2YxOTU4MWMzMGIwMGYiLCJpYXQiOjE3MzY3MzM4MTYsImV4cCI6MTczNjczNzQxNn0.08PyL-zyclVNKuNTnO3iQw0EGGA9cbhwWFRkNFoL0Ls
 
 {
   "title": "Test Song",

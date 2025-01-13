@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsInt,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  IsUrl,
-} from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateSongDto {
   @ApiProperty({ description: 'The title of the song' })
@@ -24,7 +18,7 @@ export class CreateSongDto {
   trackNumber: number;
 
   @ApiProperty({ description: 'The file URL of the song' })
-  @IsUrl({}, { message: 'Invalid URL format' })
+  @IsString({ message: 'Invalid URL format' })
   @IsOptional()
   @IsNotEmpty()
   fileUrl?: string;

@@ -16,9 +16,13 @@ import { LikesModule } from './likes/likes.module';
 import { FollowsModule } from './follows/follows.module';
 import { StreamingHistoryModule } from './streaming_history/streaming_history.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
+    MulterModule.register({
+      dest: './uploads',
+    }),
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
