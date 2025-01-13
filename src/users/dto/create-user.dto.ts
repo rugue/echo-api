@@ -42,4 +42,9 @@ export class CreateUserDto {
   @ValidateNested()
   @Type(() => CreateUserSettingsDto)
   settings?: CreateUserSettingsDto;
+
+  @ApiProperty({ description: 'The role of the user', default: 'user' })
+  @IsString()
+  @IsNotEmpty()
+  role: string;
 }

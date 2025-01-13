@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { CreateSongDto } from './dto/create-song.dto';
 import { UpdateSongDto } from './dto/update-song.dto';
 import { Song, SongDocument } from './entities/song.entity';
+
 @Injectable()
 export class SongsService {
   constructor(@InjectModel(Song.name) private songModel: Model<SongDocument>) {}

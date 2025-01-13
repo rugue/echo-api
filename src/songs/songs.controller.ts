@@ -57,6 +57,11 @@ export class SongsController {
     )
     file: Express.Multer.File,
   ) {
+    if (!file) {
+      throw new Error('File upload failed');
+    }
+    createSongDto.fileUrl = `${process.env.BASE_URL}/uploads/${file.filename}`;
+    console.log('Received data:', createSongDto);
     return this.songsService.create(createSongDto, file);
   }
 

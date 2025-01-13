@@ -3,9 +3,10 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "username": "newuser11",
-  "email": "newuser11@example.com",
-  "password_hash": "password123"
+  "username": "artistuser",
+  "email": "artistuser@example.com",
+  "password_hash": "password123",
+  "role": "artist"
 }
 
 ### Login
@@ -13,7 +14,7 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "newuser11@example.com",
+  "email": "artistuser@example.com",
   "password": "password123"
 }
 
@@ -24,7 +25,7 @@ Cookie: Refresh=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzgzOTdlYzJ
 
 ### Get all users (requires JWT)
 GET http://localhost:3000/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzgzOTdlYzJiZTkyYzI1NjRmMjIzMGQiLCJpYXQiOjE3MzY2Nzc4MDQsImV4cCI6MTczNjY4MTQwNH0.owhfIoGfJyoIcVXvHIajyGg-69GzydVY2bbM4pLH8sk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzgzZDYxMzczY2YxOTU4MWMzMGIwMGYiLCJpYXQiOjE3MzY2OTMzNzQsImV4cCI6MTczNjY5Njk3NH0.p6w4I2qZ7sa3Wxq7KE6MOph1a91FZ9t8VLP2AEWI9eM
 
 ### Get user by ID (requires JWT)
 GET http://localhost:3000/users/678397ec2be92c2564f2230d
@@ -56,39 +57,92 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdkM
 
 ### Upload a new song
 POST http://localhost:3000/songs
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzdkMzdhNjM0ZDkyMTA2ZmZmMjkxMTEiLCJpYXQiOjE3MzYyNjExOTEsImV4cCI6MTczNjI2NDc5MX0.moh5_uc5AH2yUSC6qBGUSi1pN1DCs8-8Z6qxDOI-BZc
-Content-Type: multipart/form-data
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzgzZDYxMzczY2YxOTU4MWMzMGIwMGYiLCJpYXQiOjE3MzY2OTMzNzQsImV4cCI6MTczNjY5Njk3NH0.p6w4I2qZ7sa3Wxq7KE6MOph1a91FZ9t8VLP2AEWI9eM
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
---boundary
+------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="title"
 
 Test Song
---boundary
+------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="duration"
 
 300
---boundary
+------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="trackNumber"
 
 1
---boundary
+------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="fileUrl"
 
 http://localhost:3000/uploads/test-song.mp3
---boundary
+------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="album"
 
 ALBUM_ID
---boundary
+------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="artist"
 
 ARTIST_ID
---boundary
+------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="file"; filename="test-song.mp3"
 Content-Type: audio/mpeg
 
 < ./path/to/your/test-song.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+
+
+
+
+
+
+### Upload a new song
+
+POST http://localhost:3000/songs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzgzZDYxMzczY2YxOTU4MWMzMGIwMGYiLCJpYXQiOjE3MzY3MzExNTEsImV4cCI6MTczNjczNDc1MX0.4y-J_qYKwQ9PNU3v965Hu8Ex7RcyCD0pMFToSUBp2to
+
+{
+  "title": "Test Song",
+  "duration": 300,
+  "trackNumber": 1,
+  "fileUrl": "http://localhost:3000/uploads/test-song.mp3",
+  "album": "ALBUM_ID",
+  "artist": "ARTIST_ID"
+}
+
+
+
+
+### Upload a new song
+
+POST http://localhost:3000/songs
+Content-Type: multipart/form-data
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzgzZDYxMzczY2YxOTU4MWMzMGIwMGYiLCJpYXQiOjE3MzY3Mjc0MDYsImV4cCI6MTczNjczMTAwNn0._T21ZmaJ7ezm_Wv32ySOxbZaXSBRK5IPy5Td0AxjthQ
+
+--boundary
+Content-Disposition: form-data; name="title"
+Test Song
+
+--boundary
+Content-Disposition: form-data; name="duration"
+300
+
+--boundary
+Content-Disposition: form-data; name="trackNumber"
+1
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="test-song.mp3"
+Content-Type: audio/mpeg
+
+[Binary file data here]
+
 --boundary--
+
+
 
 
 
