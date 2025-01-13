@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, SchemaTypes, Types } from 'mongoose';
+import { Document, SchemaTypes } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Album } from 'src/albums/entities/album.entity';
 
@@ -7,9 +7,9 @@ export type SongDocument = Song & Document;
 
 @Schema({ timestamps: true })
 export class Song {
-  @ApiProperty({ description: 'The unique identifier of the song' })
-  @Prop({ type: SchemaTypes.ObjectId, auto: true })
-  _id: Types.ObjectId;
+  // @ApiProperty({ description: 'The unique identifier of the song' })
+  // @Prop({ type: SchemaTypes.ObjectId, auto: true })
+  // _id: Types.ObjectId;
 
   @ApiProperty({ description: 'The title of the song' })
   @Prop({ required: true })
@@ -23,9 +23,9 @@ export class Song {
   @Prop({ required: true })
   trackNumber: number;
 
-  @ApiProperty({ description: 'The file URL of the song' })
-  @Prop({ required: true })
-  fileUrl: string;
+  // @ApiProperty({ description: 'The file URL of the song' })
+  // @Prop({ required: true })
+  // fileUrl: string;
 
   @ApiProperty({ description: 'The album associated with the song' })
   @Prop({ type: SchemaTypes.ObjectId, ref: 'Album', required: true })

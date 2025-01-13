@@ -1,36 +1,33 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { ApiProperty, IntersectionType } from '@nestjs/swagger';
+import { IsNotEmpty, IsNumberString } from 'class-validator';
+import { Express } from 'express';
 
-export class CreateSongDto {
-  @ApiProperty({ description: 'The title of the song' })
-  @IsString()
+export class SongBodyDto {
   @IsNotEmpty()
   title: string;
 
-  @ApiProperty({ description: 'The duration of the song in seconds' })
-  @IsInt()
+  @IsNumberString()
   @IsNotEmpty()
   duration: number;
 
-  @ApiProperty({ description: 'The track number of the song' })
-  @IsInt()
+  @IsNumberString()
   @IsNotEmpty()
   trackNumber: number;
 
-  @ApiProperty({ description: 'The file URL of the song' })
-  @IsString({ message: 'Invalid URL format' })
-  @IsOptional()
-  @IsNotEmpty()
-  fileUrl?: string;
-
-  @ApiProperty({ description: 'The ID of the album associated with the song' })
-  @IsString()
   @IsNotEmpty()
   album: string;
 
-  @IsString()
   @IsNotEmpty()
   artist: string;
-
-  filePath?: string;
 }
+
+export class FileDto {
+  @ApiProperty({
+    description: 'The file to upload (only .mp3 files are allowed)',
+    type: 'string',
+    format: 'binary',
+  })
+  file: Express.Multer.File;
+}
+
+export class CreateSongDto extends IntersectionType(SongBodyDto, FileDto) {}

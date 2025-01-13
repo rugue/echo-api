@@ -1,25 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { existsSync } from 'fs';
+import { mkdir, writeFile } from 'fs/promises';
+import { join } from 'path';
+import { v4 as uuidv4 } from 'uuid';
+interface FileServiceT {
+  upload: (file: Express.Multer.File) => Promise<string>;
+}
 
 @Injectable()
-export class FilesService {
-  private readonly uploadPath = './uploads';
+export class FilesService implements FileServiceT {
+  async upload(file: Express.Multer.File) {
+    const uniqueFileName = this.generateUniqueFileName(file);
 
-  readonly storage = diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, this.uploadPath);
-    },
-    filename: (req, file, cb) => {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-      const ext = extname(file.originalname);
-      cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
-    },
-  });
+    const uploadDir = join(process.cwd(), 'uploads');
 
-  getMulterOptions() {
-    return {
-      storage: this.storage,
-    };
+    if (!existsSync(uploadDir)) {
+      await mkdir(uploadDir, { recursive: true });
+    }
+
+    const filePath = join(uploadDir, uniqueFileName);
+
+    await writeFile(filePath, file.buffer);
+
+    return filePath;
+  }
+
+  private generateUniqueFileName(file: Express.Multer.File) {
+    const fileExtension = '.' + file.originalname.split('.').at(-1);
+
+    const uniqueFileName = uuidv4() + fileExtension;
+    return uniqueFileName;
   }
 }

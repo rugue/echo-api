@@ -7,6 +7,7 @@ import { Response } from 'express';
 import { JwtRefreshAuthGuard } from './guards/jwt-refresh-auth.guard';
 import { ApiTags, ApiBody, ApiResponse } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { LoginUserDto } from 'src/users/dto/login-user.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -15,7 +16,7 @@ export class AuthController {
 
   @Post('login')
   @UseGuards(LocalAuthGuard)
-  @ApiBody({ type: CreateUserDto })
+  @ApiBody({ type: LoginUserDto })
   @ApiResponse({ status: 200, description: 'User successfully logged in.' })
   async login(
     @CurrentUser() user: User,

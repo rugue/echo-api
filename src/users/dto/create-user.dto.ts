@@ -23,7 +23,7 @@ export class CreateUserDto {
   @ApiProperty({ description: 'The password hash of the user' })
   @IsString()
   @IsNotEmpty()
-  password_hash: string;
+  password: string;
 
   @ApiProperty({
     description: 'The refresh token of the user',

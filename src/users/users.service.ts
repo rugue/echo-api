@@ -40,7 +40,7 @@ export class UsersService {
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
-    const hashedPassword = await hash(createUserDto.password_hash, 10);
+    const hashedPassword = await hash(createUserDto.password, 10);
     // if (settings) {
     //   const newSettings = new this.userSettingsModel(settings);
     //   const savedNewSettings = await newSettings.save();

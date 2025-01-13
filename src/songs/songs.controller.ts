@@ -11,60 +11,72 @@ import {
   UploadedFile,
   Res,
   ParseFilePipe,
-  BadRequestException,
+  HttpStatus,
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
-import { CreateSongDto } from './dto/create-song.dto';
+import { SongBodyDto } from './dto/create-song.dto';
 import { UpdateSongDto } from './dto/update-song.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
-import { ApiTags, ApiBody, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiBody,
+  ApiParam,
+  ApiResponse,
+  ApiConsumes,
+} from '@nestjs/swagger';
 import { Song } from './entities/song.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { FilesService } from 'src/files/files.service';
-import { Response } from 'express';
+import { Response, Express } from 'express';
 import { createReadStream } from 'fs';
 import { join } from 'path';
-import { Express } from 'express';
 import { FileSizeValidationPipe } from './pipes/file-size-validation.pipe';
-import { FileTypeValidationPipe } from './pipes/file-type-validation.pipe';
+import { FilesService } from 'src/files/files.service';
 
-@ApiTags('upload')
-@Controller('upload')
+@ApiTags('song')
+@Controller('song')
 export class SongsController {
   constructor(
     private readonly songsService: SongsService,
     private readonly filesService: FilesService,
+    // private readonly filesService: FilesService,
   ) {}
+
+  // @Post('upload')
+  // @ApiBody({ type: SampleDto })
+  // @UseInterceptors(FileInterceptor('file'))
+  // @ApiConsumes('multipart/form-data')
+  // firstUpload(
+  //   @UploadedFile() file: Express.Multer.File,
+  //   @Body() body: SampleDto,
+  // ) {
+  //   console.log({ file, body });
+  // }
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Artist)
   @UseInterceptors(FileInterceptor('file'))
-  @ApiBody({ type: CreateSongDto })
+  // @ApiBody({ type: CreateSongDto })
   @ApiResponse({
-    status: 201,
+    status: HttpStatus.CREATED,
     description: 'Song successfully created.',
     type: Song,
   })
+  @ApiConsumes('multipart/form-data')
   async uploadFile(
-    @Body() createSongDto: CreateSongDto,
-    @UploadedFile(
-      new FileSizeValidationPipe(),
-      new FileTypeValidationPipe(),
-      new ParseFilePipe(),
-    )
+    @UploadedFile(new FileSizeValidationPipe(), new ParseFilePipe())
     file: Express.Multer.File,
+    @Body() createSongDto: SongBodyDto,
   ) {
-    console.log(file);
-    if (!file) {
-      throw new BadRequestException('No file provided.');
-    }
-    createSongDto.fileUrl = `${process.env.BASE_URL}/uploads/${file.filename}`;
-    console.log('Received data:', createSongDto);
-    return this.songsService.create(createSongDto, file);
+    // upload file with write file async and get file path
+
+    const filePath = await this.filesService.upload(file);
+    console.log({ file, createSongDto, filePath });
+
+    return this.songsService.create(createSongDto, filePath);
   }
 
   // @Post()
