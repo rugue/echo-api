@@ -14,7 +14,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
-import { SongBodyDto } from './dto/create-song.dto';
+import { CreateSongDto, SongBodyDto } from './dto/create-song.dto';
 import { UpdateSongDto } from './dto/update-song.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
@@ -59,7 +59,7 @@ export class SongsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Artist)
   @UseInterceptors(FileInterceptor('file'))
-  // @ApiBody({ type: CreateSongDto })
+  @ApiBody({ type: CreateSongDto })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'Song successfully created.',
