@@ -34,6 +34,7 @@ import { createReadStream } from 'fs';
 import { join } from 'path';
 import { FileSizeValidationPipe } from './pipes/file-size-validation.pipe';
 import { FilesService } from 'src/files/files.service';
+import { AlbumsService } from 'src/albums/albums.service';
 
 @ApiTags('song')
 @Controller('song')
@@ -41,6 +42,7 @@ export class SongsController {
   constructor(
     private readonly songsService: SongsService,
     private readonly filesService: FilesService,
+    private readonly albumsService: AlbumsService,
     // private readonly filesService: FilesService,
   ) {}
 
@@ -75,6 +77,12 @@ export class SongsController {
 
     const filePath = await this.filesService.upload(file);
     console.log({ file, createSongDto, filePath });
+
+    // Validate album existence
+    const album = await this.albumsService.findOne(createSongDto.album);
+    if (!album) {
+      throw new Error('Album not found');
+    }
 
     return this.songsService.create(createSongDto, filePath);
   }

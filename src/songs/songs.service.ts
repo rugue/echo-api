@@ -4,10 +4,14 @@ import { Model } from 'mongoose';
 import { SongBodyDto } from './dto/create-song.dto';
 import { UpdateSongDto } from './dto/update-song.dto';
 import { Song, SongDocument } from './entities/song.entity';
+import { AlbumsService } from 'src/albums/albums.service';
 
 @Injectable()
 export class SongsService {
-  constructor(@InjectModel(Song.name) private songModel: Model<SongDocument>) {}
+  constructor(
+    @InjectModel(Song.name) private songModel: Model<SongDocument>,
+    private readonly albumsService: AlbumsService,
+  ) {}
 
   async create(songBodyDto: SongBodyDto, filePath: string): Promise<Song> {
     // console.log(typeof songBodyDto?.title);

@@ -217,3 +217,18 @@ Content-Type: application/json
 
 ### Delete an artist
 DELETE http://localhost:3000/artists/6775b1e3a186aed400ae3ab2
+
+
+
+
+
+
+
+POST /albums
+{
+  "title": "My Album",
+  "releaseDate": "2025-01-01",
+  "genre": "Pop",
+  "coverImageUrl": "http://example.com/cover.jpg",
+  "artist": "artistId"
+}
