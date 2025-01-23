@@ -170,6 +170,7 @@ export class SongsController {
   }
 
   @Get('stream/:id')
+  @UseGuards(JwtAuthGuard)
   @ApiParam({ name: 'id', description: 'The ID of the song' })
   @ApiResponse({ status: 200, description: 'Streaming song' })
   async stream(@Param('id') id: string, @Res() res: Response) {
