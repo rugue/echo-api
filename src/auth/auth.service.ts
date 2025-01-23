@@ -18,19 +18,6 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  // async verifyUser(email: string, password: string) {
-  //   try {
-  //     const user = await this.usersService.getUser({ email });
-  //     const authenticated = await bcrypt.compare(password, user.password_hash);
-  //     if (!authenticated) {
-  //       throw new UnauthorizedException('Invalid password');
-  //     }
-  //     return user;
-  //   } catch (error) {
-  //     throw new UnauthorizedException('Credentials are not valid.', error);
-  //   }
-  // }
-
   async login(user: User, response: Response, redirect = false) {
     const expiresAccessToken = new Date();
     expiresAccessToken.setMilliseconds(
@@ -90,6 +77,11 @@ export class AuthService {
     if (redirect) {
       response.redirect(this.configService.getOrThrow('AUTH_UI_REDIRECT'));
     }
+
+    return {
+      accessToken,
+      refreshToken,
+    };
   }
 
   async verifyUser(email: string, password: string) {
@@ -124,12 +116,6 @@ export class AuthService {
   }
 
   async signUp(createUserDto: any) {
-    // const hashedPassword = await bcrypt.hash(createUserDto.password_hash, 10);
-    // const newUser = await this.usersService.createUser({
-    //   ...createUserDto,
-    //   password_hash: hashedPassword,
-    // });
-
     return this.usersService.createUser(createUserDto);
   }
 }

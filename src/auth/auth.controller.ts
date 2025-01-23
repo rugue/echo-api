@@ -22,7 +22,8 @@ export class AuthController {
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
   ) {
-    await this.authService.login(user, response);
+    const tokens = await this.authService.login(user, response);
+    return tokens;
   }
 
   @ApiBody({ type: CreateUserDto })
@@ -40,7 +41,8 @@ export class AuthController {
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
   ) {
-    await this.authService.login(user, response);
+    const tokens = await this.authService.login(user, response);
+    return tokens;
   }
 
   // @UseGuards(LocalAuthGuard)

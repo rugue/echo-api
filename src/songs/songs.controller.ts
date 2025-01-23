@@ -79,7 +79,9 @@ export class SongsController {
     console.log({ file, createSongDto, filePath });
 
     // Validate album existence
-    const album = await this.albumsService.findOne(createSongDto.album);
+    const album = await this.albumsService.findOne(
+      createSongDto.album.toString(),
+    );
     if (!album) {
       throw new Error('Album not found');
     }

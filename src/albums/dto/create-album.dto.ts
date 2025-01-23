@@ -5,6 +5,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { Types } from 'mongoose';
 
 export class CreateAlbumDto {
   @ApiProperty({ description: 'The title of the album' })
@@ -38,5 +39,5 @@ export class CreateAlbumDto {
   })
   @IsString()
   @IsNotEmpty()
-  artist: string;
+  artist: Types.ObjectId;
 }

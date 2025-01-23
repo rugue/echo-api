@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateAlbumDto } from './dto/create-album.dto';
@@ -7,13 +7,20 @@ import { Album, AlbumDocument } from './entities/album.entity';
 
 @Injectable()
 export class AlbumsService {
+  private readonly logger = new Logger(AlbumsService.name);
   constructor(
     @InjectModel(Album.name) private albumModel: Model<AlbumDocument>,
   ) {}
 
   async create(createAlbumDto: CreateAlbumDto): Promise<Album> {
-    const newAlbum = new this.albumModel(createAlbumDto);
-    return newAlbum.save();
+    this.logger.log('Creating album with data:', createAlbumDto);
+    try {
+      const newAlbum = new this.albumModel(createAlbumDto);
+      return await newAlbum.save();
+    } catch (error) {
+      this.logger.error('Error creating album:', error);
+      throw error;
+    }
   }
 
   async findAll(): Promise<Album[]> {
