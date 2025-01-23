@@ -89,6 +89,9 @@ export class AuthService {
       const user = await this.usersService.getUser({
         email,
       });
+      if (!user) {
+        throw new UnauthorizedException('User not found');
+      }
       const authenticated = await compare(password, user.password_hash);
       if (!authenticated) {
         throw new UnauthorizedException();
@@ -102,6 +105,9 @@ export class AuthService {
   async veryifyUserRefreshToken(refreshToken: string, userId: string) {
     try {
       const user = await this.usersService.getUser({ _id: userId });
+      if (!user) {
+        throw new UnauthorizedException('User not found');
+      }
       const authenticated = await bcrypt.compare(
         refreshToken,
         user.refreshToken,

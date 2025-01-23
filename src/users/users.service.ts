@@ -63,9 +63,13 @@ export class UsersService {
     query: FilterQuery<User>,
     updateUserDto: UpdateUserDto,
   ): Promise<User> {
-    return this.userModel
+    const updatedUser = await this.userModel
       .findOneAndUpdate(query, updateUserDto, { new: true })
       .exec();
+    if (!updatedUser) {
+      throw new NotFoundException('User not found');
+    }
+    return updatedUser;
   }
 
   // async updateUser(query: FilterQuery<User>, data: UpdateQuery<User>) {
