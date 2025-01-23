@@ -180,8 +180,11 @@ export class SongsController {
       return;
     }
 
-    const filePath = join(process.cwd(), song.filePath);
+    const filePath = join(process.cwd(), 'uploads', song.filePath);
     const file = createReadStream(filePath);
+    file.on('error', () => {
+      res.status(500).send('Error streaming file');
+    });
     res.set({
       'Content-Type': 'audio/mpeg',
       'Content-Disposition': `inline; filename="${song.title}.mp3"`,
