@@ -1,7 +1,6 @@
 import { ApiProperty, IntersectionType } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumberString } from 'class-validator';
 import { Express } from 'express';
-import { Types } from 'mongoose';
 
 export class SongBodyDto {
   @IsNotEmpty()
@@ -16,7 +15,7 @@ export class SongBodyDto {
   trackNumber: number;
 
   @IsNotEmpty()
-  album: Types.ObjectId;
+  album: string;
 
   @IsNotEmpty()
   artist: string;

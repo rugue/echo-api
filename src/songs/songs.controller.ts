@@ -30,11 +30,11 @@ import {
 import { Song } from './entities/song.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response, Express } from 'express';
-import { createReadStream } from 'fs';
-import { join } from 'path';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FileSizeValidationPipe } from './pipes/file-size-validation.pipe';
 import { FilesService } from 'src/files/files.service';
 import { AlbumsService } from 'src/albums/albums.service';
+import { BypassTransformInterceptor } from './bypass-transform.decorator';
 
 @ApiTags('song')
 @Controller('song')
@@ -77,14 +77,6 @@ export class SongsController {
 
     const filePath = await this.filesService.upload(file);
     console.log({ file, createSongDto, filePath });
-
-    // Validate album existence
-    const album = await this.albumsService.findOne(
-      createSongDto.album.toString(),
-    );
-    if (!album) {
-      throw new Error('Album not found');
-    }
 
     return this.songsService.create(createSongDto, filePath);
   }
@@ -169,26 +161,10 @@ export class SongsController {
     return this.songsService.remove(id);
   }
 
+  // @BypassTransformInterceptor()
   @Get('stream/:id')
   @UseGuards(JwtAuthGuard)
-  @ApiParam({ name: 'id', description: 'The ID of the song' })
-  @ApiResponse({ status: 200, description: 'Streaming song' })
   async stream(@Param('id') id: string, @Res() res: Response) {
-    const song = await this.songsService.findOne(id);
-    if (!song) {
-      res.status(404).send('Song not found');
-      return;
-    }
-
-    const filePath = join(process.cwd(), 'uploads', song.filePath);
-    const file = createReadStream(filePath);
-    file.on('error', () => {
-      res.status(500).send('Error streaming file');
-    });
-    res.set({
-      'Content-Type': 'audio/mpeg',
-      'Content-Disposition': `inline; filename="${song.title}.mp3"`,
-    });
-    file.pipe(res);
+    await this.songsService.stream(id, res);
   }
 }

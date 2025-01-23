@@ -27,7 +27,10 @@ export class Song {
   // @Prop({ required: true })
   // fileUrl: string;
 
-  @ApiProperty({ description: 'The album associated with the song' })
+  @ApiProperty({
+    description: 'The album associated with the song',
+    type: Album,
+  })
   @Prop({ type: SchemaTypes.ObjectId, ref: 'Album', required: true })
   album: Album;
 

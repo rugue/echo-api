@@ -36,7 +36,6 @@ export class AuthController {
   @Post('refresh')
   @UseGuards(JwtRefreshAuthGuard)
   @ApiResponse({ status: 200, description: 'Token successfully refreshed.' })
-  @UseGuards(JwtRefreshAuthGuard)
   async refreshToken(
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
