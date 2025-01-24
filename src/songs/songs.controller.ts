@@ -34,7 +34,7 @@ import { Response, Express } from 'express';
 import { FileSizeValidationPipe } from './pipes/file-size-validation.pipe';
 import { FilesService } from 'src/files/files.service';
 import { AlbumsService } from 'src/albums/albums.service';
-import { BypassTransformInterceptor } from './bypass-transform.decorator';
+// import { BypassTransformInterceptor } from './bypass-transform.decorator';
 
 @ApiTags('song')
 @Controller('song')

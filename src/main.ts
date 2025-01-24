@@ -17,7 +17,7 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle('Music Streaming API')
+    .setTitle('Echo - Music Streaming API')
     .setDescription('API for streaming music')
     .setVersion('1.0')
     .addCookieAuth()
