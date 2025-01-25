@@ -36,6 +36,7 @@ export class CreateAlbumDto {
 
   @ApiProperty({
     description: 'The ID of the artist associated with the album',
+    type: String,
   })
   @IsString()
   @IsNotEmpty()

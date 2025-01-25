@@ -43,7 +43,6 @@ export class SongsController {
     private readonly songsService: SongsService,
     private readonly filesService: FilesService,
     private readonly albumsService: AlbumsService,
-    // private readonly filesService: FilesService,
   ) {}
 
   // @Post('upload')
