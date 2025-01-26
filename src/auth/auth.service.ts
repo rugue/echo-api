@@ -8,6 +8,8 @@ import { ConfigService } from '@nestjs/config';
 import { User } from 'src/users/schemas/user.entity';
 import { Response } from 'express';
 import { TokenPayload } from './token-payload.interface';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { CreateArtistDto } from 'src/artists/dto/create-artist.dto';
 
 @Injectable()
 export class AuthService {
@@ -121,7 +123,17 @@ export class AuthService {
     }
   }
 
-  async signUp(createUserDto: any) {
-    return this.usersService.createUser(createUserDto);
+  async signUp(createUserDto: CreateUserDto) {
+    const user = await this.usersService.createUser(createUserDto);
+    if (createUserDto.role === 'artist') {
+      const createArtistDto: CreateArtistDto = {
+        name: createUserDto.username,
+        bio: '',
+        genre: '',
+        popularity: 0,
+      };
+      await this.artistsService.createArtist(createArtistDto);
+    }
+    return user;
   }
 }

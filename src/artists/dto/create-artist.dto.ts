@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateArtistDto {
   @ApiProperty({ description: 'The name of the artist' })
@@ -9,16 +9,13 @@ export class CreateArtistDto {
 
   @ApiProperty({ description: 'The biography of the artist', required: false })
   @IsString()
-  @IsOptional()
-  bio: string;
+  bio?: string;
 
   @ApiProperty({ description: 'The genre of the artist', required: false })
   @IsString()
-  @IsOptional()
-  genre: string;
+  genre?: string;
 
   @ApiProperty({ description: 'The popularity of the artist', required: false })
   @IsInt()
-  @IsOptional()
-  popularity: number;
+  popularity?: number;
 }

@@ -1,13 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
-import { CreateUserSettingsDto } from 'src/settings/dto/create-user-settings.dto';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateUserDto {
   @ApiProperty({ description: 'The username of the user' })
@@ -24,24 +16,6 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   password: string;
-
-  @ApiProperty({
-    description: 'The refresh token of the user',
-    required: false,
-  })
-  @IsOptional()
-  @IsString()
-  refreshToken?: string;
-
-  @ApiProperty({
-    description: 'The settings of the user',
-    required: false,
-    type: CreateUserSettingsDto,
-  })
-  @IsOptional()
-  @ValidateNested()
-  @Type(() => CreateUserSettingsDto)
-  settings?: CreateUserSettingsDto;
 
   @ApiProperty({ description: 'The role of the user', default: 'user' })
   @IsString()
